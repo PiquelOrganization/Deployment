@@ -1,0 +1,30 @@
+name: Deploy
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create env file
+        run: |
+          echo "DATA_PATH=${{ vars.DATA_PATH }}" >> ./envfile
+          echo "DB_ADMIN_USER=${{ secrets.DB_ADMIN_USER }}" >> ./envfile
+          echo "DB_ADMIN_PASSWORD=${{ secrets.DB_ADMIN_PASSWORD }}" >> ./envfile
+          echo "PGADMIN_PORT=${{ vars.PGADMIN_PORT }}" >> ./envfile
+          echo "PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}" >> ./envfile
+          echo "PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}" >> ./envfile
+
+      - name: Docker Stack Deploy
+        uses: cssnr/stack-deploy-action@v1
+        with:
+          name: piquel-vps
+          file: docker-stack.yml
+          host: piquel.fr
+          user: deploy
+          ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          env_file: ./envfile
+
