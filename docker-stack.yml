@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres
-    user: postgres
     environment:
       POSTGRES_USER: ${DB_ADMIN_USER}
       POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD}
