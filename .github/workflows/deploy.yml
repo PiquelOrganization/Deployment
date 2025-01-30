@@ -27,14 +27,3 @@ jobs:
           user: deploy
           ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
           env_file: ./.env
-
-      # - name: Docker Stack Deploy
-      #   uses: kitconcept/docker-stack-deploy@v1.0.1
-      #   with:
-      #     remote_host: piquel.fr
-      #     remote_user: deploy
-      #     remote_private_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
-      #     stack_file: "./docker-stack.yml"
-      #     stack_name: piquel-vps
-      #     env_file: ./.env
-
