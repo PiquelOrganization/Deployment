@@ -19,22 +19,22 @@ jobs:
           echo "PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}" >> ./.env
 
       - name: Docker Stack Deploy
-        uses: kitconcept/docker-stack-deploy@v1.0.1
+        uses: cssnr/stack-deploy-action@v1
         with:
-          remote_host: piquel.fr
-          remote_user: deploy
-          remote_private_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
-          stack_file: "./docker-stack.yml"
-          stack_name: piquel-vps
+          name: piquel-vps
+          file: docker-stack.yml
+          host: piquel.fr
+          user: deploy
+          ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
           env_file: ./.env
 
       # - name: Docker Stack Deploy
-      #   uses: cssnr/stack-deploy-action@v1
+      #   uses: kitconcept/docker-stack-deploy@v1.0.1
       #   with:
-      #     name: piquel-vps
-      #     file: docker-stack.yml
-      #     host: piquel.fr
-      #     user: deploy
-      #     ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+      #     remote_host: piquel.fr
+      #     remote_user: deploy
+      #     remote_private_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+      #     stack_file: "./docker-stack.yml"
+      #     stack_name: piquel-vps
       #     env_file: ./.env
 
