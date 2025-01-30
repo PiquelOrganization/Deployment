@@ -12,6 +12,7 @@ jobs:
       - name: Create env file
         run: |
           echo "DATA_PATH=${{ vars.DATA_PATH }}" >> ./.env
+          echo "DB_PORT=${{ vars.DB_PORT }}" >> ./.env
           echo "DB_ADMIN_USER=${{ secrets.DB_ADMIN_USER }}" >> ./.env
           echo "DB_ADMIN_PASSWORD=${{ secrets.DB_ADMIN_PASSWORD }}" >> ./.env
           echo "PGADMIN_PORT=${{ vars.PGADMIN_PORT }}" >> ./.env
