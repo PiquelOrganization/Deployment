@@ -11,20 +11,30 @@ jobs:
 
       - name: Create env file
         run: |
-          echo "DATA_PATH=${{ vars.DATA_PATH }}" >> ./envfile
-          echo "DB_ADMIN_USER=${{ secrets.DB_ADMIN_USER }}" >> ./envfile
-          echo "DB_ADMIN_PASSWORD=${{ secrets.DB_ADMIN_PASSWORD }}" >> ./envfile
-          echo "PGADMIN_PORT=${{ vars.PGADMIN_PORT }}" >> ./envfile
-          echo "PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}" >> ./envfile
-          echo "PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}" >> ./envfile
+          echo "DATA_PATH=${{ vars.DATA_PATH }}" >> ./.env
+          echo "DB_ADMIN_USER=${{ secrets.DB_ADMIN_USER }}" >> ./.env
+          echo "DB_ADMIN_PASSWORD=${{ secrets.DB_ADMIN_PASSWORD }}" >> ./.env
+          echo "PGADMIN_PORT=${{ vars.PGADMIN_PORT }}" >> ./.env
+          echo "PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}" >> ./.env
+          echo "PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}" >> ./.env
 
       - name: Docker Stack Deploy
-        uses: cssnr/stack-deploy-action@v1
+        uses: kitconcept/docker-stack-deploy@v1.0.1
         with:
-          name: piquel-vps
-          file: docker-stack.yml
-          host: piquel.fr
-          user: deploy
-          ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
-          env_file: ./envfile
+          remote_host: piquel.fr
+          remote_user: deploy
+          remote_private_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          stack_file: "./docker-stack.yml"
+          stack_name: piquel-vps
+          env_file: ./.env
+
+      # - name: Docker Stack Deploy
+      #   uses: cssnr/stack-deploy-action@v1
+      #   with:
+      #     name: piquel-vps
+      #     file: docker-stack.yml
+      #     host: piquel.fr
+      #     user: deploy
+      #     ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+      #     env_file: ./.env
 
