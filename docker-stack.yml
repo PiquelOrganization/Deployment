@@ -19,6 +19,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
   postgres:
     image: postgres
+    user: ${DB_ADMIN_USER}
     environment:
       POSTGRES_DB: piquel-fr
       POSTGRES_USER: ${DB_ADMIN_USER}
