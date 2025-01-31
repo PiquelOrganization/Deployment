@@ -18,6 +18,7 @@ services:
       #   protocol: tcp
       #   published: 443
       #  :target: 443
+      - "80:80"
       - "443:443"
       - "8080:8080"
     volumes:
@@ -31,8 +32,8 @@ services:
       POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD}
     volumes:
       - postgres:/var/lib/postgresql/data
-    ports:
-      - "${DB_PORT}:5432"
+    # ports:
+    #   - "${DB_PORT}:5432"
   # pgadmin:
   #   image: dpage/pgadmin4
   #   environment:
