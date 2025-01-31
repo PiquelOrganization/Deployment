@@ -5,17 +5,17 @@ services:
       - "--api.insecure=true"
       - "--providers.docker"
     ports:
-      - mode: host
-        protocol: tcp
-        published: 80
-        target: 80
-      - mode: host
-        protocol: tcp
-        published: 443
-        target: 443
+      # - mode: host
+      #   protocol: tcp
+      #   published: 80
+      #   target: 80
+      # - mode: host
+      #   protocol: tcp
+      #   published: 443
+      #  :target: 443
+      - "80:80"
       - "8080:8080"
     volumes:
-      - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
   postgres:
     image: postgres
@@ -55,4 +55,3 @@ volumes:
   #data: ${DATA_PATH}
   postgres:
   pgadmin:
-  letsencrypt:
