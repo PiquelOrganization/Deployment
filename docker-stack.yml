@@ -4,6 +4,11 @@ services:
     command:
       - "--api.insecure=true"
       - "--providers.docker"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.websecure.address=:443"
+      - "--certificatesresolvers.piquel-resolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.piquel-resolver.acme.email=piquel@piquel.fr"
+      - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.jsom"
     ports:
       # - mode: host
       #   protocol: tcp
@@ -13,9 +18,10 @@ services:
       #   protocol: tcp
       #   published: 443
       #  :target: 443
-      - "80:80"
+      - "443:443"
       - "8080:8080"
     volumes:
+      - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
   postgres:
     image: postgres
@@ -55,3 +61,4 @@ volumes:
   #data: ${DATA_PATH}
   postgres:
   pgadmin:
+  letsencrypt:
