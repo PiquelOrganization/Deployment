@@ -8,7 +8,7 @@ services:
       - "--entryPoints.websecure.address=:443"
       - "--certificatesresolvers.piquel-resolver.acme.tlschallenge=true"
       - "--certificatesresolvers.piquel-resolver.acme.email=piquel@piquel.fr"
-      - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.jsom"
+      - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.json"
     ports:
       # - mode: host
       #   protocol: tcp
