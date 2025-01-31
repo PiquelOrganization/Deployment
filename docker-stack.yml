@@ -2,13 +2,15 @@ services:
   traefik:
     image: traefik:v3.3
     command:
-      - "--api.insecure=true"
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
+
       - "--entrypoints.websecure.address=:443"
+
       - "--certificatesresolvers.piquel-resolver.acme.tlschallenge=true"
       - "--certificatesresolvers.piquel-resolver.acme.email=piquel@piquel.fr"
       - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.json"
+
       - "--entrypoints.piquel-fr.address=:80"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.scheme=https"
@@ -21,10 +23,6 @@ services:
         protocol: tcp
         published: 443
         target: 443
-      - mode: host
-        protocol: tcp
-        published: 8080
-        target: 8080
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
