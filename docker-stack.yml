@@ -3,9 +3,10 @@ services:
     image: traefik:v3.3
     command:
       # Basic setup
-      - "--api.dashboard=true"
+      - "--api=true"
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=piquel-network"
 
       # Setup certs
       - "--certificatesresolvers.piquel-resolver.acme.tlschallenge=true"
@@ -19,6 +20,15 @@ services:
       - "--entrypoints.piquel-http.http.redirections.entrypoint.scheme=https"
       # PostgreSQL entrypoint
       - "--entrypoints.postgres.address=:5432"
+
+      # Logging and telemetry
+      - "--log.filepath=/var/logs/traefik.log"
+      - "--log.level=DEBUG"
+      - "--accesslog=true"
+      - "--accesslog.filepath=/var/logs/access.log"
+      - "--metrics.otlp=true"
+      - "--tracing=true"
+      - "--tracing.serviceName=piquel-fr"
     ports:
       - mode: host
         protocol: tcp
