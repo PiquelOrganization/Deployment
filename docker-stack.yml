@@ -2,17 +2,19 @@ services:
   traefik:
     image: traefik:v3.3
     command:
+      # Basic setup
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
 
-      - "--entrypoints.websecure.address=:443"
-
+      # Setup certs
       - "--certificatesresolvers.piquel-resolver.acme.tlschallenge=true"
       - "--certificatesresolvers.piquel-resolver.acme.email=piquel@piquel.fr"
       - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.json"
 
+      - "--entrypoints.piquel-fr-secure.address=:443"
+
       - "--entrypoints.piquel-fr.address=:80"
-      - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=piquel-fr-secure"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.scheme=https"
     ports:
       - mode: host
