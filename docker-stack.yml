@@ -13,6 +13,7 @@ services:
 
       # piquel-fr entrypoints
       - "--entrypoints.piquel-fr-secure.address=:443"
+
       - "--entrypoints.piquel-fr.address=:80"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=piquel-fr-secure"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.scheme=https"
@@ -27,6 +28,10 @@ services:
         protocol: tcp
         published: 443
         target: 443
+      - mode: host
+        protocol: tcp
+        published: ${DB_PORT}
+        target: ${DB_PORT}
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
