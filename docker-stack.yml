@@ -12,10 +12,10 @@ services:
       - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.json"
 
       # piquel-fr entrypoints
-      - "--entrypoints.piquel-fr-secure.address=:443"
-      - "--entrypoints.piquel-fr.address=:80"
-      - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=piquel-fr-secure"
-      - "--entrypoints.piquel-fr.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.piquel-https.address=:443"
+      - "--entrypoints.piquel-http.address=:80"
+      - "--entrypoints.piquel-http.http.redirections.entrypoint.to=piquel-https"
+      - "--entrypoints.piquel-http.http.redirections.entrypoint.scheme=https"
       # PostgreSQL entrypoint
       - "--entrypoints.postgres.address=:5432"
     ports:
@@ -47,7 +47,6 @@ services:
       - "traefik.tcp.services.postgres.loadbalancer.server.port=5432"
       - "traefik.tcp.routers.postgres.rule=HostSNI(`${DB_HOST}`)"
       - "traefik.tcp.routers.postgres.entrypoints=postgres"
-      - "traefik.tcp.routers.postgres.tls=true"
       - "traefik.tcp.routers.postgres.tls.certresolver=piquel-resolver"
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -62,7 +61,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
       - "traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_HOST}`)"
-      - "traefik.http.routers.pgadmin.entrypoints=piquel-fr-secure"
+      - "traefik.http.routers.pgadmin.entrypoints=piquel-https"
       - "traefik.http.routers.pgadmin.tls.certresolver=piquel-resolver"
     volumes:
       - pgadmin:/var/lib/pgadmin
