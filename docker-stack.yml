@@ -19,7 +19,7 @@ services:
       # PostgreSQL entrypoint
       - "--entrypoints.postgres.address=:5432"
       # pgAdmin
-      - "--entrypoints.pgadmin-secure.address:=443"
+      - "--entrypoints.pgadmin-secure.address=:443"
       - "--entrypoints.pgadmin.address=:80"
       - "--entrypoints.pgadmin.http.redirections.entrypoint.to=pgadmin-secure"
       - "--entrypoints.pgadmin.http.redirections.entrypoint.scheme=https"
