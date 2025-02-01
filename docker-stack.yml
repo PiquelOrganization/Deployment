@@ -34,8 +34,8 @@ services:
         target: 5432
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_HOST}`)"
+      - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.entrypoints=piquel-https"
       - "traefik.http.routers.traefik.tls.certresolver=piquel-resolver"
     volumes:
