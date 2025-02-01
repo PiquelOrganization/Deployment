@@ -12,8 +12,8 @@ services:
       - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.json"
 
       # piquel-fr entrypoints
-      - "--entrypoints.piquel-fr-secure.address=${HOST}:443"
-      - "--entrypoints.piquel-fr.address=${HOST}:80"
+      - "--entrypoints.piquel-fr-secure.address=:443"
+      - "--entrypoints.piquel-fr.address=:80"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=piquel-fr-secure"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.scheme=https"
       # PostgreSQL entrypoint
