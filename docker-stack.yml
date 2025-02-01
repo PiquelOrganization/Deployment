@@ -17,12 +17,7 @@ services:
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=piquel-fr-secure"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.scheme=https"
       # PostgreSQL entrypoint
-      - "--entrypoints.postgres.address=${DB_HOST}:5432"
-      # pgAdmin
-      # - "--entrypoints.pgadmin-secure.address=${PGADMIN_HOST}:443"
-      # - "--entrypoints.pgadmin.address=${PGADMIN_HOST}:80"
-      # - "--entrypoints.pgadmin.http.redirections.entrypoint.to=pgadmin-secure"
-      # - "--entrypoints.pgadmin.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.postgres.address=:5432"
     ports:
       - mode: host
         protocol: tcp
@@ -57,21 +52,21 @@ services:
       - postgres:/var/lib/postgresql/data
     networks:
       - piquel-network
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
-  #     - "traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_HOST}`)"
-  #     - "traefik.http.routers.pgadmin.entrypoints=pgadmin-secure"
-  #     - "traefik.http.routers.pgadmin.tls.certresolver=piquel-resolver"
-  #   volumes:
-  #     - pgadmin:/var/lib/pgadmin
-  #   networks:
-  #     - piquel-network
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
+      - "traefik.http.routers.pgadmin.rule=Host(`${PGADMIN_HOST}`)"
+      - "traefik.http.routers.pgadmin.entrypoints=piquel-fr-secure"
+      - "traefik.http.routers.pgadmin.tls.certresolver=piquel-resolver"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    networks:
+      - piquel-network
   # satisfactory:
   #   image: wolveix/satisfactory-server:latest
   #   container_name: satisfactory
