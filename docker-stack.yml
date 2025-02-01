@@ -44,10 +44,10 @@ services:
       POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.postgres.loadbalancer.server.port=5432"
-      - "traefik.http.routers.postgres.rule=Host(`${DB_HOST}`)"
-      - "traefik.http.routers.postgres.entrypoints=postgres"
-      - "traefik.http.routers.postgres.tls.certresolver=piquel-resolver"
+      - "traefik.tcp.services.postgres.loadbalancer.server.port=5432"
+      - "traefik.tcp.routers.postgres.rule=Host(`${DB_HOST}`)"
+      - "traefik.tcp.routers.postgres.entrypoints=postgres"
+      - "traefik.tcp.routers.postgres.tls.certresolver=piquel-resolver"
     volumes:
       - postgres:/var/lib/postgresql/data
     networks:
