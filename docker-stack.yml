@@ -17,10 +17,10 @@ services:
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.to=piquel-fr-secure"
       - "--entrypoints.piquel-fr.http.redirections.entrypoint.scheme=https"
       # PostgreSQL entrypoint
-      - "--entrypoints.postgres.address=:5432"
+      - "--entrypoints.postgres.address=${DB_HOST}:5432"
       # pgAdmin
-      - "--entrypoints.pgadmin-secure.address=:443"
-      - "--entrypoints.pgadmin.address=:80"
+      - "--entrypoints.pgadmin-secure.address=${PGADMIN_HOST}:443"
+      - "--entrypoints.pgadmin.address=${PGADMIN_HOST}:80"
       - "--entrypoints.pgadmin.http.redirections.entrypoint.to=pgadmin-secure"
       - "--entrypoints.pgadmin.http.redirections.entrypoint.scheme=https"
     ports:
