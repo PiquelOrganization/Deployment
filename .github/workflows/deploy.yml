@@ -12,6 +12,7 @@ jobs:
       - name: Create env file
         run: |
           echo "DATA_PATH=${{ vars.DATA_PATH }}" >> ./.env
+          echo "HOST=${{ vars.HOST }}" >> ./.env
 
           echo "DB_HOST=${{ vars.DB_HOST }}" >> ./.env
           echo "DB_ADMIN_USER=${{ secrets.DB_ADMIN_USER }}" >> ./.env
