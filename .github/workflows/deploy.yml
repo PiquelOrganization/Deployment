@@ -12,13 +12,16 @@ jobs:
       - name: Create env file
         run: |
           echo "DATA_PATH=${{ vars.DATA_PATH }}" >> ./.env
+
           echo "DB_HOST=${{ vars.DB_HOST }}" >> ./.env
-          echo "DB_PORT=${{ vars.DB_PORT }}" >> ./.env
           echo "DB_ADMIN_USER=${{ secrets.DB_ADMIN_USER }}" >> ./.env
           echo "DB_ADMIN_PASSWORD=${{ secrets.DB_ADMIN_PASSWORD }}" >> ./.env
-          echo "PGADMIN_PORT=${{ vars.PGADMIN_PORT }}" >> ./.env
+
+          echo "PGADMIN_HOST=${{ vars.PGADMIN_HOST }}" >> ./.env
           echo "PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}" >> ./.env
           echo "PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}" >> ./.env
+
+          echo "VPS_USER_EMAIL=${{ secrets.VPS_USER_EMAIL }}" >> ./.env
 
       - name: Docker Stack Deploy
         uses: cssnr/stack-deploy-action@v1
