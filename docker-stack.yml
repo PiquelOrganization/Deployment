@@ -3,7 +3,7 @@ services:
     image: traefik:v3.3
     command:
       # Basic setup
-      - "--apt.dashboard=true"
+      - "--api.dashboard=true"
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
 
@@ -36,8 +36,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`${TRAEFIK_HOST}`)"
       - "traefik.http.routers.traefik.service=api@internal"
-      # - "traefik.http.routers.traefik.entrypoints=piquel-https"
-      # - "traefik.http.routers.traefik.tls.certresolver=piquel-resolver"
+      - "traefik.http.routers.traefik.entrypoints=piquel-https"
+      - "traefik.http.routers.traefik.tls.certresolver=piquel-resolver"
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
