@@ -15,20 +15,15 @@ services:
 
       # piquel-fr entrypoints
       - "--entrypoints.piquel-https.address=:443"
+      - "--entrypoints.piquel-https.http.tls.certresolver=piquel-resolver"
+
       - "--entrypoints.piquel-http.address=:80"
       - "--entrypoints.piquel-http.http.redirections.entrypoint.to=piquel-https"
       - "--entrypoints.piquel-http.http.redirections.entrypoint.scheme=https"
+
       # PostgreSQL entrypoint
       - "--entrypoints.postgres.address=:5432"
-
-      # Logging and telemetry
-      - "--log.filepath=/var/logs/traefik.log"
-      - "--log.level=DEBUG"
-      - "--accesslog=true"
-      - "--accesslog.filepath=/var/logs/access.log"
-      - "--metrics.otlp=true"
-      - "--tracing=true"
-      - "--tracing.serviceName=piquel-fr"
+      - "--entrypoints.postgres.http.tls.certresolver=piquel-resolver"
     ports:
       - mode: host
         protocol: tcp
