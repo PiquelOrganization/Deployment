@@ -12,6 +12,7 @@ services:
       - "--certificatesresolvers.piquel-resolver.acme.tlschallenge=true"
       - "--certificatesresolvers.piquel-resolver.acme.email=${VPS_USER_EMAIL}"
       - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.json"
+      - "--tls.options.default.alpnprotocols=['postgresql']"
 
       # piquel-fr entrypoints
       - "--entrypoints.piquel-https.address=:443"
