@@ -12,11 +12,9 @@ services:
       - "--certificatesresolvers.piquel-resolver.acme.tlschallenge=true"
       - "--certificatesresolvers.piquel-resolver.acme.email=${VPS_USER_EMAIL}"
       - "--certificatesresolvers.piquel-resolver.acme.storage=/letsencrypt/acme.json"
-      #- "--tls.options.default.alpnprotocols=['postgresql']"
 
       # piquel-fr entrypoints
       - "--entrypoints.piquel-https.address=:443"
-      - "--entrypoints.piquel-https.http.tls.certresolver=piquel-resolver"
 
       - "--entrypoints.piquel-http.address=:80"
       - "--entrypoints.piquel-http.http.redirections.entrypoint.to=piquel-https"
@@ -24,7 +22,6 @@ services:
 
       # PostgreSQL entrypoint
       - "--entrypoints.postgres.address=:5432"
-      - "--entrypoints.postgres.http.tls.certresolver=piquel-resolver"
     ports:
       - mode: host
         protocol: tcp
@@ -58,7 +55,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.tcp.services.postgres.loadbalancer.server.port=5432"
-      - "traefik.tcp.routers.postgres.rule=HostSNI(`${DB_HOST}`) && ALPN(`postgresql`)"
+      - "traefik.tcp.routers.postgres.rule=HostSNI(`${DB_HOST}`)"
       - "traefik.tcp.routers.postgres.entrypoints=postgres"
       - "traefik.tcp.routers.postgres.tls.certresolver=piquel-resolver"
     volumes:
