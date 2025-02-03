@@ -14,6 +14,7 @@ jobs:
           echo "DATA_PATH=${{ vars.DATA_PATH }}" >> ./.env
           echo "HOST=${{ vars.HOST }}" >> ./.env
           echo "TRAEFIK_HOST=${{ vars.TRAEFIK_HOST }}" >> ./.env
+          echo "TRAEFIK_AUTH=${{ secrets.TRAEFIK_AUTH }}" >> ./.env
 
           echo "DB_HOST=${{ vars.DB_HOST }}" >> ./.env
           echo "DB_ADMIN_USER=${{ secrets.DB_ADMIN_USER }}" >> ./.env
