@@ -42,6 +42,7 @@ services:
       - "traefik.http.routers.traefik.entrypoints=piquel-https"
       - "traefik.http.routers.traefik.tls.certresolver=piquel-resolver"
       - "traefik.http.middlewares.piquel-auth.basicauth.users=${TRAEFIK_AUTH}"
+      - "traefik.http.routers.traefik.middlewares=piquel-auth@docker"
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
