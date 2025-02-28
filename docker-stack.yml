@@ -57,7 +57,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.tcp.services.postgres.loadbalancer.server.port=5432"
-      - "traefik.tcp.routers.postgres.rule=Host(`${DB_HOST}`)"
+      - "traefik.tcp.routers.postgres.rule=HostSNI(`${DB_HOST}`)"
       - "traefik.tcp.routers.postgres.entrypoints=postgres"
     volumes:
       - postgres:/var/lib/postgresql/data
