@@ -95,7 +95,6 @@ services:
   #       - STEAMBETA=false
 
 volumes:
-  #data: ${DATA_PATH}
   postgres:
   pgadmin:
   letsencrypt:
