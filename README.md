@@ -1,6 +1,10 @@
 # Deployment
 Deploy VPS solution
 
+## TODO
+
+- Add SSL to PostgreSQL
+
 ## Setup
 
 ### Small setup elements for better use

@@ -61,10 +61,6 @@ services:
       - "traefik.tcp.routers.postgres.entrypoints=postgres"
     volumes:
       - postgres:/var/lib/postgresql/data
-    command:
-      - "postgres"
-      - "-c" 
-      - "ssl=on"
     networks:
       - piquel-network
   pgadmin:
