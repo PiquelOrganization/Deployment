@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: piquel-fr
+      POSTGRES_USER: piquel
+      POSTGRES_PASSWORD: piquel
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
