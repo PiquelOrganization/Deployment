@@ -71,9 +71,9 @@ services:
     container_name: dms
     hostname: ${MAIL_HOST}
     env_file: configs/mailserver.env
-    environment:
-      SSL_TYPE: letsencrypt
-      SSL_DOMAIN: ${MAIL_HOST}
+    # environment:
+    #   SSL_TYPE: letsencrypt
+    #   SSL_DOMAIN: ${MAIL_HOST}
     ports:
       - "25:25"    # SMTP  (explicit TLS => STARTTLS, Authentication is DISABLED => use port 465/587 instead)
       - "143:143"  # IMAP4 (explicit TLS => STARTTLS)
