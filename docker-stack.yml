@@ -66,25 +66,46 @@ services:
       - pgadmin:/var/lib/pgadmin
     networks:
       - piquel-network
-  # satisfactory:
-  #   image: wolveix/satisfactory-server:latest
-  #   container_name: satisfactory
-  #   ports:
-  #       - '7777:7777/udp'
-  #       - '7777:7777/tcp'
-  #   volumes:
-  #       - '${DATA_PATH}/satisfactory:/config'
-  #   environment:
-  #       - MAXPLAYERS=4
-  #       - PGID=1000
-  #       - PUID=1000
-  #       - ROOTLESS=false
-  #       - STEAMBETA=false
+  dms:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    container_name: dms
+    hostname: ${MAIL_HOST}
+    env_file: configs/mailserver.env
+    labels:
+      - "traefik.http.routers.dms.rule=Host(`${MAIL_HOST}`)"
+    environment:
+      SSL_TYPE: letsencrypt
+      SSL_DOMAIN: ${MAIL_HOST}
+    ports:
+      - "25:25"    # SMTP  (explicit TLS => STARTTLS, Authentication is DISABLED => use port 465/587 instead)
+      - "143:143"  # IMAP4 (explicit TLS => STARTTLS)
+      - "465:465"  # ESMTP (implicit TLS)
+      - "587:587"  # ESMTP (explicit TLS => STARTTLS)
+      - "993:993"  # IMAP4 (implicit TLS)
+    volumes:
+      - dms-data:/var/mail/
+      - dms-state:/var/mail-state/
+      - dms-logs:/var/log/mail/
+      - dms-config:/tmp/docker-mailserver/
+      - letsencrypt:/etc/letsencrypt
+      - /etc/localtime:/etc/localtime:ro
+    stop_grace_period: 1m
+    cap_add:
+      - NET_ADMIN
+    healthcheck:
+      test: "ss --listening --ipv4 --tcp | grep --silent ':smtp' || exit 1"
+      timeout: 3s
+      retries: 0
 
 volumes:
   postgres:
   pgadmin:
   letsencrypt:
+
+  dms-data:
+  dms-state:
+  dms-logs:
+  dms-config:
 
 networks:
   piquel-network:

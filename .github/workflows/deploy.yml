@@ -6,9 +6,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Create env file
         run: |
           echo "TRAEFIK_HOST=${{ vars.TRAEFIK_HOST }}" >> ./.env
@@ -23,6 +20,8 @@ jobs:
           echo "PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}" >> ./.env
 
           echo "VPS_USER_EMAIL=${{ secrets.VPS_USER_EMAIL }}" >> ./.env
+
+          echo "MAIL_HOST=${{ vars.MAIL_HOST }}" >> ./.env
 
       - name: Docker Stack Deploy
         uses: cssnr/stack-deploy-action@v1
