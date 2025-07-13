@@ -87,19 +87,22 @@ services:
       - dms-config:/tmp/docker-mailserver/
       - letsencrypt:/etc/letsencrypt
       - /etc/localtime:/etc/localtime:ro
-    stop_grace_period: 1m
     cap_add:
       - NET_ADMIN
     healthcheck:
       test: "ss --listening --ipv4 --tcp | grep --silent ':smtp' || exit 1"
       timeout: 3s
       retries: 0
+    networks:
+      - piquel-network
   whoami:
     image: docker.io/traefik/whoami:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`${MAIL_HOST}`)"
       - "traefik.http.routers.whoami.tls.certresolver=piquel-resolver"
+    networks:
+      - piquel-network
 
 volumes:
   postgres:
