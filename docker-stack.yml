@@ -68,7 +68,6 @@ services:
       - piquel-network
   dms:
     image: ghcr.io/docker-mailserver/docker-mailserver:latest
-    container_name: dms
     hostname: ${MAIL_HOST}
     env_file: ./configs/mailserver.env
     environment:
